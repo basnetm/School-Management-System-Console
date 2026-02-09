@@ -1,4 +1,5 @@
 ﻿using School_Management_System_Console;
+using System.Security.Cryptography.X509Certificates;
 
 //Student student = new Student();
 //student.Name = "Manoj";
@@ -33,6 +34,10 @@
 //staff.DisplayStaffInfo();
 
 bool status = true;
+List<Student> students = new List<Student>();
+List<Teacher> teachers = new List<Teacher>();
+
+
 
 while (status)
 {
@@ -40,12 +45,16 @@ while (status)
     Console.WriteLine("1. Add Student");
     Console.WriteLine("2. Add Teacher");
     Console.WriteLine("3. Add Staff");
-    Console.WriteLine("4. Exit");
+    Console.WriteLine("4. search");
+    Console.WriteLine("5. SearchBYName");
+    Console.WriteLine("6. Exit");
+
 
     int choice = int.Parse(Console.ReadLine());
 
     if (choice == 1)
     {
+
         Student student = new Student();
 
         Console.WriteLine("Enter Name:");
@@ -59,6 +68,8 @@ while (status)
 
         Console.WriteLine("Enter Grade:");
         student.Grade = Console.ReadLine();
+
+        students.Add(student);   
 
         student.DisplayStudentInfo();
     }
@@ -80,6 +91,9 @@ while (status)
 
         Console.WriteLine("Enter salery:");
         teacher.Salary = decimal.Parse(Console.ReadLine());
+
+        teachers.Add(teacher);
+
 
         teacher.DisplayTeacherInfo();
     }
@@ -107,8 +121,44 @@ while (status)
     }
     else if (choice == 4)
     {
+        Console.WriteLine("Enter ID to search:");
+        int searchId = int.Parse(Console.ReadLine());
+
+        Student found = students.FirstOrDefault(s => s.Id == searchId);
+
+        if (found != null)
+        {
+            Console.WriteLine("Student Found:");
+            found.DisplayStudentInfo();
+        }
+        else
+        {
+            Console.WriteLine("Student not found.");
+        }
+    }
+
+    else if (choice == 5)
+    {
+        Console.WriteLine("Enter Name of TeacherName to search:...");
+        var foundName= Console.ReadLine();
+      
+        Teacher found=teachers.FirstOrDefault(s => s.Name == foundName);
+        if (found != null)
+        {
+            Console.WriteLine("Teacher Found:");
+            found.DisplayTeacherInfo();
+        }
+        else
+        {
+            Console.WriteLine("Student not found.");
+        }
+        break;
+    }
+
+    else if (choice == 6)
+    {
         Console.WriteLine("Exiting...");
-        break;  // stops the loop
+        break;  
     }
     else
     {
